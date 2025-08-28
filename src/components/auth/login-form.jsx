@@ -19,7 +19,6 @@ import {
 import { GithubIcon } from "lucide-react";
 
 export default function LoginForm() {
-  console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
   const {
     register,
     handleSubmit,
@@ -36,18 +35,24 @@ export default function LoginForm() {
   const loading = useAuthStore((state) => state.isLoading);
 
   const onSubmit = async (data) => {
-    await login(data);
-    router.push(`/profile`);
+    const result = await login(data);
+    if (result?.success) {
+      router.push(`/profile`);
+    }
   };
 
   const handleGoogleLogin = async () => {
-    await loginWithGoogle();
-    router.push(`/profile`);
+    const result = await loginWithGoogle();
+    if (result?.success) {
+      router.push(`/profile`);
+    }
   };
 
   const handleGithubLogin = async () => {
-    await loginWithGithub();
-    router.push(`/profile`);
+    const result = await loginWithGithub();
+    if (result?.success) {
+      router.push(`/profile`);
+    }
   };
 
   const googleLogo =
@@ -62,23 +67,19 @@ export default function LoginForm() {
         title={formHeaderData.title}
         subtitle={formHeaderData.subtitle}
       />
-
       <div className="space-y-5 lg:space-y-6">
         <FieldGroup fields={loginFields} register={register} errors={errors} />
-
         <FormRememberRow
           rememberLabel={formRememberData.rememberLabel}
           forgotText={formRememberData.forgotText}
           forgotHref={formRememberData.forgotHref}
         />
-
         <AppButton
           type="submit"
           disabled={isSubmitting || loading}
           className={loginButton.className}
           text={isSubmitting || loading ? "Signing In..." : loginButton.text}
         />
-
         <div className="flex gap-4">
           <Button
             variant="outline"
@@ -88,7 +89,6 @@ export default function LoginForm() {
           >
             <Image src={googleLogo} alt="Google Logo" width={24} height={24} />
           </Button>
-
           <Button
             variant="outline"
             onClick={handleGithubLogin}

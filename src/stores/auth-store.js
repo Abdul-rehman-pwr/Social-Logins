@@ -14,9 +14,13 @@ export const useAuthStore = create(
       login: async (credentials) => {
         set({ isLoading: true, error: null });
         try {
-          set({ user: credentials, isLoggedIn: true, isLoading: false });
+          set({ user: credentials, isLoggedIn: true });
+          return { success: true };
         } catch (error) {
-          set({ error: "Login failed", isLoading: false });
+          set({ error: "Login failed" });
+          return { success: false, error };
+        } finally {
+          set({ isLoading: false });
         }
       },
 
@@ -34,10 +38,13 @@ export const useAuthStore = create(
               phoneNumber: firebaseUser.phoneNumber || "",
             },
             isLoggedIn: true,
-            isLoading: false,
           });
+          return { success: true };
         } catch (error) {
-          set({ error: "Google login failed", isLoading: false });
+          set({ error: "Google login failed" });
+          return { success: false, error };
+        } finally {
+          set({ isLoading: false });
         }
       },
 
@@ -55,10 +62,13 @@ export const useAuthStore = create(
               phoneNumber: firebaseUser.phoneNumber || "",
             },
             isLoggedIn: true,
-            isLoading: false,
           });
+          return { success: true };
         } catch (error) {
-          set({ error: "GitHub login failed", isLoading: false });
+          set({ error: "GitHub login failed" });
+          return { success: false, error };
+        } finally {
+          set({ isLoading: false });
         }
       },
 
