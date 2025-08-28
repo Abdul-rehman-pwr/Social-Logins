@@ -11,11 +11,12 @@ export default function AppButton({
   return (
     <Button
       disabled={disabled}
+      {...props}
+      variant="default"
       className={clsx(
         fullWidth ? "min-w-full" : "w-auto inline-flex",
         className
       )}
-      {...props}
     >
       {text}
     </Button>

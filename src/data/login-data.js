@@ -18,7 +18,7 @@ export const loginFields = [
 export const loginButton = {
   text: "Sign In",
   className:
-    "bg-[#66FCF0] hover:bg-black text-black hover:text-[#66FCF0] text-sm lg:text-base h-10 lg:h-12",
+    "bg-[#F25019] hover:bg-black text-black hover:text-[#66FCF0] text-sm lg:text-base h-10 lg:h-12",
 };
 
 export const formFooterData = {

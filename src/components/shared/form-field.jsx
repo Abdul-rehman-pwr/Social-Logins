@@ -29,8 +29,8 @@ export default function FormField({
         disabled={disabled}
         {...(!isControlled && register ? register(id) : {})}
         className={`${className} ${
-          error ? "border-red-500" : ""
-        } placeholder:text-[12px] md:placeholder:text-[15px]`}
+          error ? "border border-red-500" : "border-none"
+        } placeholder:text-[13px] placeholder:font-light placeholder:text-[#BFBFBF] h-[40px] bg-white rounded`}
       />
 
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}

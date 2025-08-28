@@ -1,11 +1,11 @@
 import Image from "next/image";
-import tealImage from "../../../public/teal.jpg";
+import pandaImage from "../../../public/panda.png";
 
 export default function AuthIllustration() {
   return (
     <div className="w-full h-full relative">
       <Image
-        src={tealImage}
+        src={pandaImage}
         alt="Basketball Player"
         fill
         className="object-cover"
