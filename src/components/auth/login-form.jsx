@@ -19,6 +19,7 @@ import {
 import { GithubIcon } from "lucide-react";
 
 export default function LoginForm() {
+  console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
   const {
     register,
     handleSubmit,
