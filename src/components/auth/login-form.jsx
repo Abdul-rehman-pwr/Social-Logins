@@ -16,7 +16,8 @@ import {
   formHeaderData,
   loginFields,
 } from "@/data/login-data";
-import { GithubIcon } from "lucide-react";
+import { GithubIcon, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function LoginForm() {
   const {
@@ -32,7 +33,9 @@ export default function LoginForm() {
   const login = useAuthStore((state) => state.login);
   const loginWithGoogle = useAuthStore((state) => state.loginWithGoogle);
   const loginWithGithub = useAuthStore((state) => state.loginWithGithub);
-  const loading = useAuthStore((state) => state.isLoading);
+
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [githubLoading, setGithubLoading] = useState(false);
 
   const onSubmit = async (data) => {
     const result = await login(data);
@@ -42,16 +45,26 @@ export default function LoginForm() {
   };
 
   const handleGoogleLogin = async () => {
-    const result = await loginWithGoogle();
-    if (result?.success) {
-      router.push(`/profile`);
+    try {
+      setGoogleLoading(true);
+      const result = await loginWithGoogle();
+      if (result?.success) {
+        router.push(`/profile`);
+      }
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
   const handleGithubLogin = async () => {
-    const result = await loginWithGithub();
-    if (result?.success) {
-      router.push(`/profile`);
+    try {
+      setGithubLoading(true);
+      const result = await loginWithGithub();
+      if (result?.success) {
+        router.push(`/profile`);
+      }
+    } finally {
+      setGithubLoading(false);
     }
   };
 
@@ -76,26 +89,44 @@ export default function LoginForm() {
         />
         <AppButton
           type="submit"
-          disabled={isSubmitting || loading}
+          disabled={isSubmitting}
           className={loginButton.className}
-          text={isSubmitting || loading ? "Signing In..." : loginButton.text}
+          text={isSubmitting ? "Signing In..." : loginButton.text}
         />
-        <div className="flex gap-4">
+
+        <div className="flex justify-center gap-6">
+          {/* Google Button */}
+          {/* Google Button */}
           <Button
-            variant="outline"
+            type="button"
             onClick={handleGoogleLogin}
-            disabled={loading}
-            className="flex-1 flex items-center justify-center p-2 rounded"
+            disabled={googleLoading}
+            className="w-14 h-14 flex items-center justify-center rounded-full border-2 border-red-500 hover:bg-red-50 transition cursor-pointer"
           >
-            <Image src={googleLogo} alt="Google Logo" width={24} height={24} />
+            {googleLoading ? (
+              <Loader2 className="animate-spin w-5 h-5 text-red-500" />
+            ) : (
+              <Image
+                src={googleLogo}
+                alt="Google Logo"
+                width={40} // bigger size
+                height={40}
+              />
+            )}
           </Button>
+
+          {/* GitHub Button */}
           <Button
-            variant="outline"
+            type="button"
             onClick={handleGithubLogin}
-            disabled={loading}
-            className="flex-1 flex items-center justify-center p-2 rounded"
+            disabled={githubLoading}
+            className="w-14 h-14 flex items-center justify-center rounded-full border-2 border-gray-800 hover:bg-gray-100 transition cursor-pointer"
           >
-            <GithubIcon />
+            {githubLoading ? (
+              <Loader2 className="animate-spin w-5 h-5 text-gray-800" />
+            ) : (
+              <GithubIcon className="w-10 h-10 text-gray-800" />
+            )}
           </Button>
         </div>
       </div>
